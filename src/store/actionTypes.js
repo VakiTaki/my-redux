@@ -1,3 +1,3 @@
-export const taskUpdated = "type/update";
-export const taskDelete = "type/delete";
-export const taskAdd = "type/add";
+export const taskUpdated = "task/update";
+export const taskDelete = "task/delete";
+export const taskAdd = "task/add";
