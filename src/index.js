@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import ReactDOM from "react-dom/client";
 import * as actions from "./store/actions";
 import { initStore } from "./store/store";
+import "./index.css";
 
 const store = initStore();
 
@@ -30,27 +31,25 @@ const App = () => {
       <button onClick={() => addTask()}>Add new task</button>
       <ul>
         {state.map((task) => (
-          <li key={task.id}>
-            <span
-              style={task.completed ? { textDecoration: "line-through" } : {}}
-            >
-              {task.title}
-            </span>
-            <input
-              value={task.title}
-              onChange={(e) => changeTitle(task.id, e.target.value)}
-            />{" "}
-            Complited: {task.completed.toString()}{" "}
-            <button onClick={() => completedTask(task.id)}>Completed</button>
-            <button
-              onClick={() => {
-                deleteTask(task.id);
-              }}
-            >
-              Delete
-            </button>
+          <div key={task.id}>
+            <li className="task">
+              <span className={task.completed ? "red" : ""}>{task.title}</span>
+              <input
+                value={task.title}
+                onChange={(e) => changeTitle(task.id, e.target.value)}
+              />{" "}
+              Complited: {task.completed.toString()}{" "}
+              <button onClick={() => completedTask(task.id)}>Completed</button>
+              <button
+                onClick={() => {
+                  deleteTask(task.id);
+                }}
+              >
+                Delete
+              </button>
+            </li>
             <hr />
-          </li>
+          </div>
         ))}
       </ul>
     </>
