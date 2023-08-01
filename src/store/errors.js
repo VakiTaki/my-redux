@@ -18,7 +18,7 @@ const { actions, reducer: errorReducer } = errorSlice;
 
 const { set } = actions;
 
-export const setError = (message) => (dispatch, actions) => {
+export const setError = (message) => (dispatch) => {
    dispatch(set(message))
 }
 

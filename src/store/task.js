@@ -1,4 +1,3 @@
-import { nanoid } from "nanoid";
 import { createSlice } from "@reduxjs/toolkit";
 import { todoService } from "../services/todos.service";
 import { setError } from "./errors";
@@ -28,7 +27,7 @@ const taskSlice = createSlice({
          state.entities.splice(elementIndex, 1)
       },
       add(state, action) {
-         state.entities.push({ ...action.payload, completed: false, title: "Task " + action.payload.id })
+         state.entities.push({ ...action.payload })
       },
       taskRequested(state, action) {
          state.isLoading = true;
@@ -44,27 +43,33 @@ export const { update, remove, add, recived, taskRequested } = actions;
 
 
 
-export const loadTasks = () => async (dispatch, getState) => {
+export const loadTasks = () => async (dispatch) => {
    dispatch(taskRequested())
    try {
       const data = await todoService.fetch();
       dispatch(recived(data));
    } catch (error) {
+      dispatch(taskRequestFailed())
       dispatch(setError(error.message))
    }
 }
-export const completedTask = (taskId) => (dispatch, getState) => {
+export const completedTask = (taskId) => (dispatch) => {
    dispatch(update({ id: taskId, completed: true }));
 };
-export const titleChange = (taskId, newTitle) => {
-   return update({ id: taskId, title: newTitle })
+export const titleChange = (taskId, newTitle) => (dispatch) => {
+   dispatch(update({ id: taskId, title: newTitle }));
 };
 
-export const taskDelete = (taskId) => {
-   return remove({ id: taskId })
+export const taskDelete = (taskId) => (dispatch) => {
+   dispatch(remove({ id: taskId }));
 };
-export const taskAdd = () => {
-   return add({ id: nanoid(4) });
+export const taskCreate = (content) => async (dispatch) => {
+   try {
+      const data = await todoService.create(content);
+      dispatch(add(data));
+   } catch (error) {
+      dispatch(setError(error.message))
+   }
 };
 
 export const getTasks = () => (state) => state.task.entities;

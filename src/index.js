@@ -3,7 +3,7 @@ import ReactDOM from "react-dom/client";
 import {
   titleChange,
   taskDelete,
-  taskAdd,
+  taskCreate,
   loadTasks,
   getTasks,
   getTaskLoadingStatus,
@@ -26,12 +26,9 @@ const App = () => {
   const deleteTask = (taskId) => {
     dispatch(taskDelete(taskId));
   };
-  const addTask = () => {
-    dispatch(taskAdd());
-  };
   useEffect(() => {
     dispatch(loadTasks());
-  }, []);
+  }, [dispatch]);
   if (isLoading) {
     return <h1>Loading</h1>;
   }
@@ -41,7 +38,12 @@ const App = () => {
   return (
     <div className="todoList">
       <h1 className="button">Todo List</h1>
-      <button className="button" onClick={() => addTask()}>
+      <button
+        className="button"
+        onClick={() =>
+          dispatch(taskCreate({ title: "Olololo", completed: false }))
+        }
+      >
         Add new task
       </button>
       <ul>
