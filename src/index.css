@@ -12,6 +12,13 @@ code {
     monospace;
 }
 
+.todoList {
+  width: 60%;
+}
+.button {
+  margin-left: 40px;
+}
+
 .red {
   text-decoration: line-through;
   text-decoration-color: red;
@@ -19,6 +26,6 @@ code {
 
 .task {
   display: flex;
-  justify-content: space-around;
+  justify-content: space-between;
   align-items: center;
 }
